@@ -18,3 +18,64 @@ div[id^="fitem_id_moddivider"] {
 div.fitemtitle {
     padding: 5px;
 }
+
+.vertical-text-container {
+    overflow-x: scroll;
+    position: static;
+    width: 60vw;
+}
+
+@media screen and (max-width: 1750px) {
+    .vertical-text-container {
+        width: 70vw;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .vertical-text-container {
+        width: 90vw;
+    }
+}
+
+th.vertical-text {
+    font-size: .8em;
+}
+
+th.vertical-text {
+    /* Something you can count on */
+    white-space: nowrap;
+}
+
+th.vertical-text > div {
+    display: block;
+    transform:
+        /* Magic Numbers */
+        translate(18px, 40px)
+        /* 45 is really 360 - 45 */
+        rotate(315deg);
+    width: 30px;
+    position: relative;
+    top: -25px;
+}
+
+th.vertical-text > div > span {
+    border-bottom: 1px solid #ccc;
+    padding: 5px 10px;
+}
+
+.vertical-text-container td {
+    border-right: 1px solid #ccc;
+    text-align: center;
+    vertical-align: top;
+}
+
+a.timelineitem img{
+    width: 20px;
+}
+
+a.timelineitem {
+    display: inline-block;
+    margin-bottom: 2px;
+    border-radius: 5px;
+    padding: 2px;
+}
