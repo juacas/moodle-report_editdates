@@ -24,25 +24,19 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$ADMIN->add('reports',
-            new admin_externalpage('reporteditdates',
-                                   get_string('pluginname', 'report_editdates'),
-                                   "$CFG->wwwroot/report/editdates/index.php",
-                                   'report/editdates:view'));
+if ($ADMIN->fulltree) {
 
-$settings->add(new admin_setting_configcheckbox('report_editdates/timelineview',
-                                                get_string('timelineview', 'report_editdates'),
-                                                get_string('timelineviewdesc', 'report_editdates'), 0));
-
-$options = array(
-    1 => 1,
-    2 => 2,
-    3 => 3,
-    4 => 4,
-    5 => 5
-);
-$settings->add(new admin_setting_configselect('report_editdates/timelinemax',
-                                                get_string('timelinemax', 'report_editdates'),
-                                                get_string('timelinemaxdesc', 'report_editdates'),
-                                                3,
-                                                $options));
+    $options = [
+        0 => get_string('timelinedonotshow', 'report_editdates'),
+        1 => 1,
+        2 => 2,
+        3 => 3,
+        4 => 4,
+        5 => 5,
+    ];
+    $settings->add(new admin_setting_configselect('report_editdates/timelinemax',
+            get_string('timelinemax', 'report_editdates'),
+            get_string('timelinemaxdesc', 'report_editdates'),
+            3,
+            $options));
+}

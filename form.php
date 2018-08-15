@@ -303,10 +303,10 @@ class report_editdates_form extends moodleform {
             $mform->removeElement('buttonar');
         }
 
-        if ($config->timelineview) { // Create timeline view.
+        if ($config->timelinemax) { // Create timeline view.
             $mform->closeHeaderBefore('timelineview');
             $mform->addElement('static', 'timelineview', '');
-            $mform->addElement('html', self::gettimelineview($timeline));
+            $mform->addElement('html', self::render_timeline_view($timeline));
         }
     }
 
@@ -386,8 +386,8 @@ class report_editdates_form extends moodleform {
         return $errors;
     }
 
-    public function gettimelineview($data) {
-        $data = self::sorttimelinedata($data);
+    public function render_timeline_view($data) {
+        $data = self::sort_timeline_data($data);
         $config = get_config('report_editdates');
 
         $first = reset($data);
@@ -400,6 +400,8 @@ class report_editdates_form extends moodleform {
         $days = round($datediff / (60 * 60 * 24)) + 1; // Timeine view expanded by 1 day.
 
         $output = '<div class="vertical-text-container">';
+        print_object($data);
+        print_object($days);
         if ($days < ($config->timelinemax * 365)) { // Timeline day span visibility.
             $output .= '<table><tr style="height: 65px;">';
             for ($d = 0; $d <= $days; $d++) { // Create timeline vertical header.
@@ -433,7 +435,7 @@ class report_editdates_form extends moodleform {
         return $output;
     }
 
-    private function sorttimelinedata($data) {
+    private function sort_timeline_data($data) {
         $sorted = array();
         // Find earliest and latest date.
         foreach ($data as $mod) {
@@ -451,7 +453,7 @@ class report_editdates_form extends moodleform {
                                               'time' => $obj->t);
                         }
                     }
-                } elseif (is_numeric($value) && $value > 0) {
+                } else if (is_numeric($value) && $value > 0) {
                         $sorted[] = array('type' => $mod["type"],
                                           'name' => $mod["name"] . ": $key",
                                           'icon' => $mod["icon"],
